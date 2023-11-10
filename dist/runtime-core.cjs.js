@@ -2975,7 +2975,7 @@ const PublicInstanceProxyHandlers = {
         );
       } else if (instance === currentRenderingInstance) {
         warn(
-          `Property ${JSON.stringify(key)} was accessed during render but is not defined on instance.`
+          `Property ${JSON.stringify(key)} was accessed during MEDIMO render but is not defined on instance.`
         );
       }
     }
