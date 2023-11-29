@@ -58,7 +58,7 @@ export function warn(msg: string, ...args: any[]) {
       ]
     )
   } else {
-    const warnArgs = [`[Vue warn]: ${msg}`, ...args]
+    const warnArgs = [`[Vue Medimo Warn]: ${msg}`, ...args]
     /* istanbul ignore if */
     if (
       trace.length &&

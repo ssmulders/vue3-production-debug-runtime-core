@@ -32,7 +32,7 @@ function warn(msg, ...args) {
       ]
     );
   } else {
-    const warnArgs = [`[Vue warn]: ${msg}`, ...args];
+    const warnArgs = [`[Vue Medimo Warn]: ${msg}`, ...args];
     if (trace.length && // avoid spamming console during tests
     true) {
       warnArgs.push(`
@@ -2980,7 +2980,7 @@ const PublicInstanceProxyHandlers = {
         );
       } else if (instance === currentRenderingInstance) {
         warn(
-          `Property ${JSON.stringify(key)} was accessed during MEDIMO render but is not defined on instance.`
+          `Property ${JSON.stringify(key)} was accessed during render but is not defined on instance.`
         );
       }
     }
