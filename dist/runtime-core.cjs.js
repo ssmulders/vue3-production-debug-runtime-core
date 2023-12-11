@@ -18,6 +18,7 @@ function warn(msg, ...args) {
   const appWarnHandler = instance && instance.appContext.config.warnHandler;
   const appErrorHandler = instance && instance.appContext.config.errorHandler;
   const trace = getComponentTrace();
+  const currentInstance = getCurrentInstance();
   console.log("warn args");
   console.log(args);
   console.log("warn appWarnHandler");
@@ -26,6 +27,9 @@ function warn(msg, ...args) {
   console.log(appErrorHandler);
   console.log("instance");
   console.log(instance);
+  console.log("currentInstance");
+  console.log(currentInstance);
+  console.log(currentInstance == null ? void 0 : currentInstance.root.appContext.config.warnHandler);
   if (appWarnHandler) {
     callWithErrorHandling(
       appWarnHandler,
@@ -224,7 +228,7 @@ function logError(err, type, contextVNode, throwInDev = true) {
     if (contextVNode) {
       popWarningContext();
     }
-    if (throwInDev || true) {
+    if (throwInDev) {
       throw err;
     } else {
       console.error(err);

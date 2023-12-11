@@ -29,7 +29,7 @@ export function convertLegacyVModelProps(vnode: VNode) {
       return
     }
 
-    if ((__DEV__ || __WARN__) && !warnedTypes.has(comp)) {
+    if ((__DEV__) && !warnedTypes.has(comp)) {
       pushWarningContext(vnode)
       warnDeprecation(DeprecationTypes.COMPONENT_V_MODEL, { type } as any, comp)
       popWarningContext()

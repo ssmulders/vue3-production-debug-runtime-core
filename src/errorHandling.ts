@@ -155,7 +155,7 @@ function logError(
       popWarningContext()
     }
     // crash in dev by default so it's more noticeable
-    if (throwInDev || __WARN__) {
+    if (throwInDev) {
       throw err
     } else if (!__TEST__) {
       console.error(err)

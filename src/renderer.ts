@@ -1204,7 +1204,7 @@ function baseCreateRenderer(
       registerHMR(instance)
     }
 
-    if (__DEV__ || __WARN__) {
+    if (__DEV__) {
       pushWarningContext(initialVNode)
       startMeasure(instance, `mount`)
     }
@@ -1249,7 +1249,7 @@ function baseCreateRenderer(
       optimized
     )
 
-    if (__DEV__ || __WARN__) {
+    if (__DEV__) {
       popWarningContext()
       endMeasure(instance, `mount`)
     }
@@ -1265,11 +1265,11 @@ function baseCreateRenderer(
       ) {
         // async & still pending - just update props and slots
         // since the component's reactive effect for render isn't set-up yet
-        if (__DEV__ || __WARN__) {
+        if (__DEV__) {
           pushWarningContext(n2)
         }
         updateComponentPreRender(instance, n2, optimized)
-        if (__DEV__ || __WARN__) {
+        if (__DEV__) {
           popWarningContext()
         }
         return
@@ -1446,7 +1446,7 @@ function baseCreateRenderer(
         let { next, bu, u, parent, vnode } = instance
         let originNext = next
         let vnodeHook: VNodeHook | null | undefined
-        if (__DEV__ || __WARN__) {
+        if (__DEV__) {
           pushWarningContext(next || instance.vnode)
         }
 
@@ -1535,7 +1535,7 @@ function baseCreateRenderer(
           devtoolsComponentUpdated(instance)
         }
 
-        if (__DEV__ || __WARN__) {
+        if (__DEV__) {
           popWarningContext()
         }
       }

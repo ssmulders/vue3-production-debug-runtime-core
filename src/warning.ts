@@ -3,7 +3,8 @@ import {
   Data,
   ComponentInternalInstance,
   ConcreteComponent,
-  formatComponentName
+  formatComponentName,
+  getCurrentInstance
 } from './component'
 import { isString, isFunction } from '@vue/shared'
 import { toRaw, isRef, pauseTracking, resetTracking } from '@vue/reactivity'
@@ -41,6 +42,7 @@ export function warn(msg: string, ...args: any[]) {
   const appWarnHandler = instance && instance.appContext.config.warnHandler
   const appErrorHandler = instance && instance.appContext.config.errorHandler
   const trace = getComponentTrace()
+  const currentInstance = getCurrentInstance();
 
   console.log('warn args');
   console.log(args);
@@ -50,6 +52,10 @@ export function warn(msg: string, ...args: any[]) {
   console.log(appErrorHandler);
   console.log('instance');
   console.log(instance);
+  console.log('currentInstance');
+  console.log(currentInstance);
+  console.log(currentInstance?.root.appContext.config.warnHandler);
+
   // console.log('__DEV__');
   // console.log(__DEV__);
   // console.log('__WARN__');

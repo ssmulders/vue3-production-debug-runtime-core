@@ -18,6 +18,7 @@ function warn(msg, ...args) {
   const appWarnHandler = instance && instance.appContext.config.warnHandler;
   const appErrorHandler = instance && instance.appContext.config.errorHandler;
   const trace = getComponentTrace();
+  const currentInstance = getCurrentInstance();
   console.log("warn args");
   console.log(args);
   console.log("warn appWarnHandler");
@@ -26,6 +27,9 @@ function warn(msg, ...args) {
   console.log(appErrorHandler);
   console.log("instance");
   console.log(instance);
+  console.log("currentInstance");
+  console.log(currentInstance);
+  console.log(currentInstance == null ? void 0 : currentInstance.root.appContext.config.warnHandler);
   if (appWarnHandler) {
     callWithErrorHandling(
       appWarnHandler,
@@ -226,7 +230,7 @@ function logError(err, type, contextVNode, throwInDev = true) {
     if (contextVNode) {
       popWarningContext();
     }
-    if (throwInDev || !!(process.env.WARNING_LEVEL !== "none")) {
+    if (throwInDev) {
       throw err;
     } else {
       console.error(err);
@@ -1543,7 +1547,7 @@ function createSuspenseBoundary(vnode, parentSuspense, parentComponent, containe
         }
         instance.asyncResolved = true;
         const { vnode: vnode2 } = instance;
-        if (!!(process.env.NODE_ENV !== "production") || !!(process.env.WARNING_LEVEL !== "none")) {
+        if (!!(process.env.NODE_ENV !== "production")) {
           pushWarningContext(vnode2);
         }
         handleSetupResult(instance, asyncSetupResult, false);
@@ -1569,7 +1573,7 @@ function createSuspenseBoundary(vnode, parentSuspense, parentComponent, containe
           remove(placeholder);
         }
         updateHOCHostEl(instance, vnode2.el);
-        if (!!(process.env.NODE_ENV !== "production") || !!(process.env.WARNING_LEVEL !== "none")) {
+        if (!!(process.env.NODE_ENV !== "production")) {
           popWarningContext();
         }
         if (isInPendingSuspense && --suspense.deps === 0) {
@@ -5671,7 +5675,7 @@ function baseCreateRenderer(options, createHydrationFns) {
     if (!!(process.env.NODE_ENV !== "production") && instance.type.__hmrId) {
       registerHMR(instance);
     }
-    if (!!(process.env.NODE_ENV !== "production") || !!(process.env.WARNING_LEVEL !== "none")) {
+    if (!!(process.env.NODE_ENV !== "production")) {
       pushWarningContext(initialVNode);
       startMeasure(instance, `mount`);
     }
@@ -5704,7 +5708,7 @@ function baseCreateRenderer(options, createHydrationFns) {
       isSVG,
       optimized
     );
-    if (!!(process.env.NODE_ENV !== "production") || !!(process.env.WARNING_LEVEL !== "none")) {
+    if (!!(process.env.NODE_ENV !== "production")) {
       popWarningContext();
       endMeasure(instance, `mount`);
     }
@@ -5713,11 +5717,11 @@ function baseCreateRenderer(options, createHydrationFns) {
     const instance = n2.component = n1.component;
     if (shouldUpdateComponent(n1, n2, optimized)) {
       if (instance.asyncDep && !instance.asyncResolved) {
-        if (!!(process.env.NODE_ENV !== "production") || !!(process.env.WARNING_LEVEL !== "none")) {
+        if (!!(process.env.NODE_ENV !== "production")) {
           pushWarningContext(n2);
         }
         updateComponentPreRender(instance, n2, optimized);
-        if (!!(process.env.NODE_ENV !== "production") || !!(process.env.WARNING_LEVEL !== "none")) {
+        if (!!(process.env.NODE_ENV !== "production")) {
           popWarningContext();
         }
         return;
@@ -5827,7 +5831,7 @@ function baseCreateRenderer(options, createHydrationFns) {
         let { next, bu, u, parent, vnode } = instance;
         let originNext = next;
         let vnodeHook;
-        if (!!(process.env.NODE_ENV !== "production") || !!(process.env.WARNING_LEVEL !== "none")) {
+        if (!!(process.env.NODE_ENV !== "production")) {
           pushWarningContext(next || instance.vnode);
         }
         toggleRecurse(instance, false);
@@ -5886,7 +5890,7 @@ function baseCreateRenderer(options, createHydrationFns) {
         if (!!(process.env.NODE_ENV !== "production") || __VUE_PROD_DEVTOOLS__) {
           devtoolsComponentUpdated(instance);
         }
-        if (!!(process.env.NODE_ENV !== "production") || !!(process.env.WARNING_LEVEL !== "none")) {
+        if (!!(process.env.NODE_ENV !== "production")) {
           popWarningContext();
         }
       }
