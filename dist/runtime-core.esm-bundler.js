@@ -16,9 +16,12 @@ function warn(msg, ...args) {
   pauseTracking();
   const instance = stack.length ? stack[stack.length - 1].component : null;
   const appWarnHandler = instance && instance.appContext.config.warnHandler;
+  const appErrorHandler = instance && instance.appContext.config.errorHandler;
   const trace = getComponentTrace();
   console.log("warn appWarnHandler");
   console.log(appWarnHandler);
+  console.log("warn appErrorHandler");
+  console.log(appErrorHandler);
   if (appWarnHandler) {
     callWithErrorHandling(
       appWarnHandler,

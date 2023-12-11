@@ -39,10 +39,13 @@ export function warn(msg: string, ...args: any[]) {
 
   const instance = stack.length ? stack[stack.length - 1].component : null
   const appWarnHandler = instance && instance.appContext.config.warnHandler
+  const appErrorHandler = instance && instance.appContext.config.errorHandler
   const trace = getComponentTrace()
 
   console.log('warn appWarnHandler');
   console.log(appWarnHandler);
+  console.log('warn appErrorHandler');
+  console.log(appErrorHandler);
   // console.log('__DEV__');
   // console.log(__DEV__);
   // console.log('__WARN__');
