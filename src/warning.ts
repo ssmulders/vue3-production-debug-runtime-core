@@ -92,13 +92,6 @@ export function warn(msg: string, ...args: any[]) {
         ErrorCodes.APP_WARN_HANDLER,
         [
           msg + args.join(''),
-          currentInstance && currentInstance.proxy,
-          trace
-              .map(
-                  ({ vnode }) => `at <${formatComponentName(currentInstance, vnode.type)}>`
-              )
-              .join('\n'),
-          trace
         ]
     )
   } else {
