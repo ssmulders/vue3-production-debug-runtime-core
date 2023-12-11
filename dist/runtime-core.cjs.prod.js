@@ -53,7 +53,12 @@ function warn$1(msg, ...args) {
       currentInstance,
       11,
       [
-        msg + args.join("")
+        msg + args.join(""),
+        currentInstance && currentInstance.proxy,
+        trace.map(
+          ({ vnode }) => `at <${formatComponentName(currentInstance, vnode.type)}>`
+        ).join("\n"),
+        trace
       ]
     );
   } else {
