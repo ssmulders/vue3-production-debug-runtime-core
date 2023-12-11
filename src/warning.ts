@@ -43,16 +43,9 @@ export function warn(msg: string, ...args: any[]) {
 
   const instance = stack.length ? stack[stack.length - 1].component : null
   const appWarnHandler = instance && instance.appContext.config.warnHandler
-  // const appErrorHandler = instance && instance.appContext.config.errorHandler
   const trace = getComponentTrace()
 
-  console.log('trace');
-  console.log(trace);
-  console.log('msg');
-  console.log(msg);
-
   if (appWarnHandler) {
-    console.log('appWarnHandler');
     callWithErrorHandling(
       appWarnHandler,
       instance,
@@ -69,7 +62,6 @@ export function warn(msg: string, ...args: any[]) {
       ]
     )
   } else if (rootWarnHandler) {
-    console.log('rootWarnHandler');
     // Deze zit er in omdat in de productie build de eerste variant altijd null is en de warnHandler dan niet getriggert wordt
     // maar hij default naar de else hieronder. Die hierboven aanpassen met deze warnHandler geeft errors
     // Met deze slimmed down versie hebben we wel de error, gebruiken we de warnhandler voor Sentry en notys,
