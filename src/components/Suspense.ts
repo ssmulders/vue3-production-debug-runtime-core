@@ -650,7 +650,7 @@ function createSuspenseBoundary(
           // retry from this component
           instance.asyncResolved = true
           const { vnode } = instance
-          if (__DEV__) {
+          if (__DEV__ || __WARN__) {
             pushWarningContext(vnode)
           }
           handleSetupResult(instance, asyncSetupResult, false)
@@ -678,7 +678,7 @@ function createSuspenseBoundary(
             remove(placeholder)
           }
           updateHOCHostEl(instance, vnode.el)
-          if (__DEV__) {
+          if (__DEV__ || __WARN__) {
             popWarningContext()
           }
           // only decrease deps count if suspense is not already resolved

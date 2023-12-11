@@ -1170,6 +1170,9 @@ function createSuspenseBoundary(vnode, parentSuspense, parentComponent, containe
         }
         instance.asyncResolved = true;
         const { vnode: vnode2 } = instance;
+        {
+          pushWarningContext(vnode2);
+        }
         handleSetupResult(instance, asyncSetupResult, false);
         if (hydratedEl) {
           vnode2.el = hydratedEl;
@@ -1193,6 +1196,9 @@ function createSuspenseBoundary(vnode, parentSuspense, parentComponent, containe
           remove(placeholder);
         }
         updateHOCHostEl(instance, vnode2.el);
+        {
+          popWarningContext();
+        }
         if (isInPendingSuspense && --suspense.deps === 0) {
           suspense.resolve();
         }
@@ -4029,6 +4035,40 @@ function createHydrationFunctions(rendererInternals) {
   return [hydrate, hydrateNode];
 }
 
+let supported;
+let perf;
+function startMeasure(instance, type) {
+  if (instance.appContext.config.performance && isSupported()) {
+    perf.mark(`vue-${type}-${instance.uid}`);
+  }
+}
+function endMeasure(instance, type) {
+  if (instance.appContext.config.performance && isSupported()) {
+    const startTag = `vue-${type}-${instance.uid}`;
+    const endTag = startTag + `:end`;
+    perf.mark(endTag);
+    perf.measure(
+      `<${formatComponentName(instance, instance.type)}> ${type}`,
+      startTag,
+      endTag
+    );
+    perf.clearMarks(startTag);
+    perf.clearMarks(endTag);
+  }
+}
+function isSupported() {
+  if (supported !== void 0) {
+    return supported;
+  }
+  if (typeof window !== "undefined" && window.performance) {
+    supported = true;
+    perf = window.performance;
+  } else {
+    supported = false;
+  }
+  return supported;
+}
+
 const queuePostRenderEffect = queueEffectWithSuspense ;
 function createRenderer(options) {
   return baseCreateRenderer(options);
@@ -4605,6 +4645,10 @@ function baseCreateRenderer(options, createHydrationFns) {
       parentComponent,
       parentSuspense
     ));
+    {
+      pushWarningContext(initialVNode);
+      startMeasure(instance, `mount`);
+    }
     if (isKeepAlive(initialVNode)) {
       instance.ctx.renderer = internals;
     }
@@ -4628,12 +4672,22 @@ function baseCreateRenderer(options, createHydrationFns) {
       isSVG,
       optimized
     );
+    {
+      popWarningContext();
+      endMeasure(instance, `mount`);
+    }
   };
   const updateComponent = (n1, n2, optimized) => {
     const instance = n2.component = n1.component;
     if (shouldUpdateComponent(n1, n2, optimized)) {
       if (instance.asyncDep && !instance.asyncResolved) {
+        {
+          pushWarningContext(n2);
+        }
         updateComponentPreRender(instance, n2, optimized);
+        {
+          popWarningContext();
+        }
         return;
       } else {
         instance.next = n2;
@@ -4714,6 +4768,9 @@ function baseCreateRenderer(options, createHydrationFns) {
         let { next, bu, u, parent, vnode } = instance;
         let originNext = next;
         let vnodeHook;
+        {
+          pushWarningContext(next || instance.vnode);
+        }
         toggleRecurse(instance, false);
         if (next) {
           next.el = vnode.el;
@@ -4754,6 +4811,9 @@ function baseCreateRenderer(options, createHydrationFns) {
             () => invokeVNodeHook(vnodeHook, parent, next, vnode),
             parentSuspense
           );
+        }
+        {
+          popWarningContext();
         }
       }
     };
