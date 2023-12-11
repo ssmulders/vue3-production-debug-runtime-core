@@ -57,6 +57,8 @@ export function warn(msg: string, ...args: any[]) {
   console.log('currentInstance');
   console.log(currentInstance);
   console.log(currentInstance?.root.appContext.config.warnHandler);
+  console.log('trace');
+  console.log(trace);
 
   // console.log('__DEV__');
   // console.log(__DEV__);
@@ -80,8 +82,10 @@ export function warn(msg: string, ...args: any[]) {
       ]
     )
   } else if (rootWarnHandler) {
-    // Deze zit er in omdat in de productie build de andere variant altijd null is en de traces loggen dan
-    // loop errors geeft.
+    // Deze zit er in omdat in de productie build de eerste variant altijd null is en de warnHandler dan niet getriggert wordt
+    // maar hij default naar de else hieronder. Die hierboven aanpassen met deze warnHandler geeft errors
+    // Met deze slimmed down versie hebben we wel de error, gebruiken we de warnhandler voor Sentry en notys,
+    // maar krijgen we geen collateral issues meer
     callWithErrorHandling(
         rootWarnHandler,
         instance,
