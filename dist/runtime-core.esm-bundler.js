@@ -2972,13 +2972,22 @@ const PublicInstanceProxyHandlers = {
     } else if ((!!(process.env.NODE_ENV !== "production") || !!(process.env.WARNING_LEVEL !== "none")) && currentRenderingInstance && (!isString(key) || // #1091 avoid internal isRef/isVNode checks on component instance leading
     // to infinite warning loop
     key.indexOf("__v") !== 0)) {
+      console.log("1");
       if (data !== EMPTY_OBJ && isReservedPrefix(key[0]) && hasOwn(data, key)) {
+        console.log("1.1");
         warn(
           `Property ${JSON.stringify(
             key
           )} must be accessed via $data because it starts with a reserved character ("$" or "_") and is not proxied on the render context.`
         );
       } else if (instance === currentRenderingInstance) {
+        console.log("2 else if");
+        console.log("currentRenderingInstance");
+        console.log(currentRenderingInstance);
+        console.log("!isString(key)");
+        console.log(!isString(key));
+        console.log("key.indexOf('__v') !== 0");
+        console.log(key.indexOf("__v") !== 0);
         warn(
           `Property ${JSON.stringify(key)} was accessed during render but is not defined on instance.`
         );
