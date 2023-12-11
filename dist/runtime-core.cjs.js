@@ -22,6 +22,8 @@ function warn(msg, ...args) {
   console.log(appWarnHandler);
   console.log("warn appErrorHandler");
   console.log(appErrorHandler);
+  console.log("instance");
+  console.log(instance);
   if (appWarnHandler) {
     callWithErrorHandling(
       appWarnHandler,
@@ -2981,12 +2983,14 @@ const PublicInstanceProxyHandlers = {
         );
       } else if (instance === currentRenderingInstance) {
         console.log("2 else if");
-        console.log("currentRenderingInstance");
+        console.log("2 currentRenderingInstance");
         console.log(currentRenderingInstance);
-        console.log("!isString(key)");
+        console.log("2 !isString(key)");
         console.log(!shared.isString(key));
-        console.log("key.indexOf('__v') !== 0");
+        console.log("2 key.indexOf('__v') !== 0");
         console.log(key.indexOf("__v") !== 0);
+        console.log("2 instance");
+        console.log(instance);
         warn(
           `Property ${JSON.stringify(key)} was accessed during render but is not defined on instance.`
         );

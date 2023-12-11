@@ -46,6 +46,8 @@ export function warn(msg: string, ...args: any[]) {
   console.log(appWarnHandler);
   console.log('warn appErrorHandler');
   console.log(appErrorHandler);
+  console.log('instance');
+  console.log(instance);
   // console.log('__DEV__');
   // console.log(__DEV__);
   // console.log('__WARN__');
