@@ -14,11 +14,11 @@ function warn(msg, ...args) {
   if (!!!(process.env.NODE_ENV !== "production") && !!!(process.env.WARNING_LEVEL !== "none"))
     return;
   pauseTracking();
+  const currentInstance = getCurrentInstance();
   const instance = stack.length ? stack[stack.length - 1].component : null;
-  const appWarnHandler = instance && instance.appContext.config.warnHandler;
+  const appWarnHandler = currentInstance && currentInstance.root.appContext.config.warnHandler;
   const appErrorHandler = instance && instance.appContext.config.errorHandler;
   const trace = getComponentTrace();
-  const currentInstance = getCurrentInstance();
   console.log("warn args");
   console.log(args);
   console.log("warn appWarnHandler");
