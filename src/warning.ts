@@ -42,6 +42,8 @@ export function warn(msg: string, ...args: any[]) {
   const appErrorHandler = instance && instance.appContext.config.errorHandler
   const trace = getComponentTrace()
 
+  console.log('warn args');
+  console.log(args);
   console.log('warn appWarnHandler');
   console.log(appWarnHandler);
   console.log('warn appErrorHandler');

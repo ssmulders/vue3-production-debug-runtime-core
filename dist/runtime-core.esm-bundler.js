@@ -18,6 +18,8 @@ function warn(msg, ...args) {
   const appWarnHandler = instance && instance.appContext.config.warnHandler;
   const appErrorHandler = instance && instance.appContext.config.errorHandler;
   const trace = getComponentTrace();
+  console.log("warn args");
+  console.log(args);
   console.log("warn appWarnHandler");
   console.log(appWarnHandler);
   console.log("warn appErrorHandler");
@@ -2998,7 +3000,8 @@ const PublicInstanceProxyHandlers = {
         console.log("2 instance");
         console.log(instance);
         warn(
-          `Property ${JSON.stringify(key)} was accessed during render but is not defined on instance.`
+          `Property ${JSON.stringify(key)} was accessed during render but is not defined on instance.`,
+          instance
         );
       } else {
         console.log("ELSE");

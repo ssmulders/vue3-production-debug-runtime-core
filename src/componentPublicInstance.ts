@@ -415,7 +415,7 @@ export const PublicInstanceProxyHandlers: ProxyHandler<any> = {
         console.log(instance);
         warn(
           `Property ${JSON.stringify(key)} was accessed during render ` +
-            `but is not defined on instance.`
+            `but is not defined on instance.`, instance
         )
       } else {
         console.log('ELSE');
