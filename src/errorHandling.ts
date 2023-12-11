@@ -145,7 +145,7 @@ function logError(
   contextVNode: VNode | null,
   throwInDev = true
 ) {
-  if (__DEV__) {
+  if (__DEV__ || __WARN__) {
     const info = ErrorTypeStrings[type]
     if (contextVNode) {
       pushWarningContext(contextVNode)
@@ -155,7 +155,7 @@ function logError(
       popWarningContext()
     }
     // crash in dev by default so it's more noticeable
-    if (throwInDev) {
+    if (throwInDev || __WARN__) {
       throw err
     } else if (!__TEST__) {
       console.error(err)

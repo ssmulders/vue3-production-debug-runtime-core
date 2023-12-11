@@ -17,6 +17,8 @@ function warn(msg, ...args) {
   const instance = stack.length ? stack[stack.length - 1].component : null;
   const appWarnHandler = instance && instance.appContext.config.warnHandler;
   const trace = getComponentTrace();
+  console.log("warn appWarnHandler");
+  console.log(appWarnHandler);
   if (appWarnHandler) {
     callWithErrorHandling(
       appWarnHandler,
@@ -208,7 +210,7 @@ function handleError(err, instance, type, throwInDev = true) {
   logError(err, type, contextVNode, throwInDev);
 }
 function logError(err, type, contextVNode, throwInDev = true) {
-  if (!!(process.env.NODE_ENV !== "production")) {
+  if (!!(process.env.NODE_ENV !== "production") || !!(process.env.WARNING_LEVEL !== "none")) {
     const info = ErrorTypeStrings[type];
     if (contextVNode) {
       pushWarningContext(contextVNode);
@@ -217,7 +219,7 @@ function logError(err, type, contextVNode, throwInDev = true) {
     if (contextVNode) {
       popWarningContext();
     }
-    if (throwInDev) {
+    if (throwInDev || !!(process.env.WARNING_LEVEL !== "none")) {
       throw err;
     } else {
       console.error(err);
