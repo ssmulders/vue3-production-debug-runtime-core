@@ -15,8 +15,9 @@ function warn(msg, ...args) {
     return;
   pauseTracking();
   const currentInstance = getCurrentInstance();
+  const rootWarnHandler = currentInstance && currentInstance.root.appContext.config.warnHandler;
   const instance = stack.length ? stack[stack.length - 1].component : null;
-  const appWarnHandler = currentInstance && currentInstance.root.appContext.config.warnHandler;
+  const appWarnHandler = instance && instance.appContext.config.warnHandler;
   const appErrorHandler = instance && instance.appContext.config.errorHandler;
   const trace = getComponentTrace();
   console.log("warn args");
@@ -42,6 +43,15 @@ function warn(msg, ...args) {
           ({ vnode }) => `at <${formatComponentName(instance, vnode.type)}>`
         ).join("\n"),
         trace
+      ]
+    );
+  } else if (rootWarnHandler) {
+    callWithErrorHandling(
+      rootWarnHandler,
+      instance,
+      11,
+      [
+        msg + args.join("")
       ]
     );
   } else {

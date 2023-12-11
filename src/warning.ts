@@ -39,10 +39,10 @@ export function warn(msg: string, ...args: any[]) {
   pauseTracking()
 
   const currentInstance = getCurrentInstance();
+  const rootWarnHandler = currentInstance && currentInstance.root.appContext.config.warnHandler;
 
   const instance = stack.length ? stack[stack.length - 1].component : null
-  // const appWarnHandler = instance && instance.appContext.config.warnHandler
-  const appWarnHandler = currentInstance && currentInstance.root.appContext.config.warnHandler;
+  const appWarnHandler = instance && instance.appContext.config.warnHandler
   const appErrorHandler = instance && instance.appContext.config.errorHandler
   const trace = getComponentTrace()
 
@@ -78,6 +78,17 @@ export function warn(msg: string, ...args: any[]) {
           .join('\n'),
         trace
       ]
+    )
+  } else if (rootWarnHandler) {
+    // Deze zit er in omdat in de productie build de andere variant altijd null is en de traces loggen dan
+    // loop errors geeft.
+    callWithErrorHandling(
+        rootWarnHandler,
+        instance,
+        ErrorCodes.APP_WARN_HANDLER,
+        [
+          msg + args.join(''),
+        ]
     )
   } else {
     const warnArgs = [`[Medimo Vue Warn]: ${msg}`, ...args]
