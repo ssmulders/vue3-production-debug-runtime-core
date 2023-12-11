@@ -387,7 +387,7 @@ export const PublicInstanceProxyHandlers: ProxyHandler<any> = {
         return globalProperties[key]
       }
     } else if (
-        (__DEV__ || __WARN__) &&
+      (__DEV__ || __WARN__) &&
       currentRenderingInstance &&
       (!isString(key) ||
         // #1091 avoid internal isRef/isVNode checks on component instance leading
@@ -406,7 +406,26 @@ export const PublicInstanceProxyHandlers: ProxyHandler<any> = {
           `Property ${JSON.stringify(key)} was accessed during render ` +
             `but is not defined on instance.`
         )
+      } else {
+        console.log('ELSE');
+        console.log(__DEV__ || __WARN__);
+        console.log('currentRenderingInstance');
+        console.log(currentRenderingInstance);
+        console.log('!isString(key)');
+        console.log(!isString(key));
+        console.log("key.indexOf('__v') !== 0");
+        console.log(key.indexOf('__v') !== 0);
       }
+    }
+    else {
+      console.log('FALLTHROUGH');
+      console.log(__DEV__ || __WARN__);
+      console.log('currentRenderingInstance');
+      console.log(currentRenderingInstance);
+      console.log('!isString(key)');
+      console.log(!isString(key));
+      console.log("key.indexOf('__v') !== 0");
+      console.log(key.indexOf('__v') !== 0);
     }
   },
 

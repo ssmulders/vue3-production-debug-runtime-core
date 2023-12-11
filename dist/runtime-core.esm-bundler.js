@@ -2982,7 +2982,25 @@ const PublicInstanceProxyHandlers = {
         warn(
           `Property ${JSON.stringify(key)} was accessed during render but is not defined on instance.`
         );
+      } else {
+        console.log("ELSE");
+        console.log(!!(process.env.NODE_ENV !== "production") || !!(process.env.WARNING_LEVEL !== "none"));
+        console.log("currentRenderingInstance");
+        console.log(currentRenderingInstance);
+        console.log("!isString(key)");
+        console.log(!isString(key));
+        console.log("key.indexOf('__v') !== 0");
+        console.log(key.indexOf("__v") !== 0);
       }
+    } else {
+      console.log("FALLTHROUGH");
+      console.log(!!(process.env.NODE_ENV !== "production") || !!(process.env.WARNING_LEVEL !== "none"));
+      console.log("currentRenderingInstance");
+      console.log(currentRenderingInstance);
+      console.log("!isString(key)");
+      console.log(!isString(key));
+      console.log("key.indexOf('__v') !== 0");
+      console.log(key.indexOf("__v") !== 0);
     }
   },
   set({ _: instance }, key, value) {
