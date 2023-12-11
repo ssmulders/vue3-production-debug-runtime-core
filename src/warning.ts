@@ -43,29 +43,16 @@ export function warn(msg: string, ...args: any[]) {
 
   const instance = stack.length ? stack[stack.length - 1].component : null
   const appWarnHandler = instance && instance.appContext.config.warnHandler
-  const appErrorHandler = instance && instance.appContext.config.errorHandler
+  // const appErrorHandler = instance && instance.appContext.config.errorHandler
   const trace = getComponentTrace()
 
-  console.log('warn args');
-  console.log(args);
-  console.log('warn appWarnHandler');
-  console.log(appWarnHandler);
-  console.log('warn appErrorHandler');
-  console.log(appErrorHandler);
-  console.log('instance');
-  console.log(instance);
-  console.log('currentInstance');
-  console.log(currentInstance);
-  console.log(currentInstance?.root.appContext.config.warnHandler);
   console.log('trace');
   console.log(trace);
-
-  // console.log('__DEV__');
-  // console.log(__DEV__);
-  // console.log('__WARN__');
-  // console.log(__WARN__);
+  console.log('msg');
+  console.log(msg);
 
   if (appWarnHandler) {
+    console.log('appWarnHandler');
     callWithErrorHandling(
       appWarnHandler,
       instance,
@@ -82,6 +69,7 @@ export function warn(msg: string, ...args: any[]) {
       ]
     )
   } else if (rootWarnHandler) {
+    console.log('rootWarnHandler');
     // Deze zit er in omdat in de productie build de eerste variant altijd null is en de warnHandler dan niet getriggert wordt
     // maar hij default naar de else hieronder. Die hierboven aanpassen met deze warnHandler geeft errors
     // Met deze slimmed down versie hebben we wel de error, gebruiken we de warnhandler voor Sentry en notys,
@@ -91,7 +79,7 @@ export function warn(msg: string, ...args: any[]) {
         currentInstance,
         ErrorCodes.APP_WARN_HANDLER,
         [
-          msg + args.join(''),
+          msg,
         ]
     )
   } else {

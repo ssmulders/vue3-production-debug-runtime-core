@@ -404,39 +404,11 @@ export const PublicInstanceProxyHandlers: ProxyHandler<any> = {
             `character ("$" or "_") and is not proxied on the render context.`
         )
       } else if (instance === currentRenderingInstance) {
-        console.log('2 else if');
-        console.log('2 currentRenderingInstance');
-        console.log(currentRenderingInstance)
-        console.log('2 !isString(key)');
-        console.log(!isString(key));
-        console.log('2 key.indexOf(\'__v\') !== 0');
-        console.log(key.indexOf('__v') !== 0);
-        console.log('2 instance');
-        console.log(instance);
         warn(
           `Property ${JSON.stringify(key)} was accessed during render ` +
             `but is not defined on instance.`, instance
         )
-      } else {
-        console.log('ELSE');
-        console.log(__DEV__ || __WARN__);
-        console.log('currentRenderingInstance');
-        console.log(currentRenderingInstance);
-        console.log('!isString(key)');
-        console.log(!isString(key));
-        console.log("key.indexOf('__v') !== 0");
-        console.log(key.indexOf('__v') !== 0);
       }
-    }
-    else {
-      console.log('FALLTHROUGH');
-      console.log(__DEV__ || __WARN__);
-      console.log('currentRenderingInstance');
-      console.log(currentRenderingInstance);
-      console.log('!isString(key)');
-      console.log(!isString(key));
-      console.log("key.indexOf('__v') !== 0");
-      console.log(key.indexOf('__v') !== 0);
     }
   },
 
