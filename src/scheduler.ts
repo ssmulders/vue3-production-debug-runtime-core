@@ -236,7 +236,7 @@ function flushJobs(seen?: CountMap) {
     for (flushIndex = 0; flushIndex < queue.length; flushIndex++) {
       const job = queue[flushIndex]
       if (job && job.active !== false) {
-        if (__DEV__ && check(job)) {
+        if ((__DEV__ || __WARN__) && check(job)) {
           continue
         }
         // console.log(`running:`, job.id)

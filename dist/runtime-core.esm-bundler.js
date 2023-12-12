@@ -367,7 +367,7 @@ function flushJobs(seen) {
     for (flushIndex = 0; flushIndex < queue.length; flushIndex++) {
       const job = queue[flushIndex];
       if (job && job.active !== false) {
-        if (!!(process.env.NODE_ENV !== "production") && check(job)) {
+        if ((!!(process.env.NODE_ENV !== "production") || !!(process.env.WARNING_LEVEL !== "none")) && check(job)) {
           continue;
         }
         callWithErrorHandling(job, null, 14);

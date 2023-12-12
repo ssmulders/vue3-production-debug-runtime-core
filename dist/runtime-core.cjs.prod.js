@@ -336,11 +336,14 @@ function flushJobs(seen) {
   isFlushPending = false;
   isFlushing = true;
   queue.sort(comparator);
+  const check = shared.NOOP;
   try {
     for (flushIndex = 0; flushIndex < queue.length; flushIndex++) {
       const job = queue[flushIndex];
       if (job && job.active !== false) {
-        if (false) ;
+        if (check(job)) {
+          continue;
+        }
         callWithErrorHandling(job, null, 14);
       }
     }
