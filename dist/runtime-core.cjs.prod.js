@@ -14,6 +14,8 @@ function popWarningContext() {
 }
 function warn$1(msg, ...args) {
   reactivity.pauseTracking();
+  const currentInstance = getCurrentInstance();
+  const rootWarnHandler = currentInstance && currentInstance.root.appContext.config.warnHandler;
   const instance = stack.length ? stack[stack.length - 1].component : null;
   const appWarnHandler = instance && instance.appContext.config.warnHandler;
   const trace = getComponentTrace();
@@ -29,6 +31,15 @@ function warn$1(msg, ...args) {
           ({ vnode }) => `at <${formatComponentName(instance, vnode.type)}>`
         ).join("\n"),
         trace
+      ]
+    );
+  } else if (rootWarnHandler) {
+    callWithErrorHandling(
+      rootWarnHandler,
+      currentInstance,
+      11,
+      [
+        msg
       ]
     );
   } else {
